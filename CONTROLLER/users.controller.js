@@ -65,7 +65,7 @@ exports.deleteUsers = async (req, res) => {
       await User.delete({
       where: {
         id,
-        status: 'pending',
+        status: true,
       },
     });
     if (!user) {
