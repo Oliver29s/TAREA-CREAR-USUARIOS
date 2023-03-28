@@ -1,4 +1,4 @@
-const express = require ('express');
+const express = require('express');
 const router = express.Router();
 
 const repairsMiddlewares = require('../MIDDLEWARES/repairs.middlewares');
@@ -17,3 +17,6 @@ router
     repairsController.updateUsers
   )
   .delete(repairsController.deleteUsers);
+
+
+  module.exports = router

@@ -1,16 +1,24 @@
 const UserRepairs = require('../models/repairs.model');
 
 exports.readlAllUser = async (req, res) => {
-  const user = await UserRepairs.findAll({
-    where: {
-      status: 'pending',
-    },
-  });
-  res.status(200).json({
-    status: 'succes',
-    message: 'The query has been done successfully',
-    user,
-  });
+  try {
+    const user = await UserRepairs.findAll({
+      where: {
+        status: 'pending',
+      },
+    });
+    res.status(200).json({
+      status: 'succes',
+      message: 'The query has been done successfully',
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status:'error',
+      message:'error'
+    })
+  }
+  
 };
 
 exports.createUser = async (req, res) => {
@@ -20,8 +28,10 @@ exports.createUser = async (req, res) => {
     const user = await UserRepairs.create({ date, userId });
 
     res.status(201).json({
-      user,
-      status: true,
+      
+      status: 'pending',
+      message: 'The product has been created',
+      user
     });
   } catch (err) {
     res.status(500).json({
@@ -33,7 +43,7 @@ exports.createUser = async (req, res) => {
 
 exports.updateUsers = async (req, res) => {
   try {
-    const { user } = req.params;
+    const { user } = req
     await user.update({
       id,
       date,
@@ -60,13 +70,8 @@ exports.updateUsers = async (req, res) => {
 
 exports.deleteUsers = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await UserRepairs.delete({
-      where: {
-        id,
-        status: 'pending',
-      },
-    });
+    const { user } = req
+      await user.delete({status:'cancelled'});
     if (!user) {
       return res.status(200).json({
         status: 'error',

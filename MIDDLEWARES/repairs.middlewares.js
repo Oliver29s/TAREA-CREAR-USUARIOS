@@ -25,7 +25,7 @@ exports.validDate = (req, res, next) => {
     const user = await UserRepairs.findOne({
       where: {
         id,
-        status: true,
+        status: 'pending',
       },
     });
   

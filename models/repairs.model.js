@@ -19,9 +19,7 @@ const UserRepairs = dataBase.define('user',{
         defaultValue: 'pending'
     },
     userId:{
-        primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
         type: DataTypes.INTEGER,
     }
 })
