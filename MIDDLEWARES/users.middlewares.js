@@ -1,51 +1,67 @@
 const User = require('../models/user.model');
 
-exports.validUsers = (req, res, next) => {
-  const { name, email, password } = req.body;
-  if (!name) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the name is required',
-    });
+exports.validUsers = async (req, res, next) => {
+  try {
+    const {name,email,password}= req.body
+
+    if (!name) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Name is required',
+      });
+    }
+    if (!email) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Email is required',
+      });
+    }
+    if (!password) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Password is required',
+      });
+    }
+   next();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: 'fail',
+      message: 'Something went very wrong',
+      error,})
   }
-  if (!email) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the  email is required',
-    });
-  }
-  if (!password) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the  password is required',
-    });
-  }
-  next();
+  
+  
 };
 
-exports.updateUsers = async (req, res, next) => {
-  const {id} = req.params
-  const { name, email } = req.body;
-  const users = await User.findOne({
-    where: {
-      id,
-      status: true,
-    },
-  });
-
+exports.validExistUser = async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const user = await User.findOne({
+      where: {
+        id,
+        status: 'available',
+      },
+    });
   
-  if (!name) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the name is required',
-    });
+    
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: `Product whith id: ${id} not found`,
+      });
+    }
+    
+    req.user = user
+    next();
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: 'fail',
+      message: 'Something went very wrong',
+      error,})
+    
   }
-  if (!email) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'the email is required',
-    });
-  }
-  req.users = users
-  next();
+ 
 };

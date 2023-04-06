@@ -20,22 +20,22 @@ exports.validDate = (req, res, next) => {
   };
 
   
-  exports.validExistProduct = async (req,res,next) =>{
+  exports.validExistRepair = async (req,res,next) =>{
     const { id } = req.params;
-    const user = await UserRepairs.findOne({
+    const repair = await UserRepairs.findOne({
       where: {
         id,
         status: 'pending',
       },
     });
   
-    if (!user) {
+    if (!repair) {
       return res.status(404).json({
         status: 'error',
-        message: 'producto no encontrado',
+        message: 'Repair not found',
       });
     }
-    req.user = user
+    req.repair = repair
     next();
   }  
  

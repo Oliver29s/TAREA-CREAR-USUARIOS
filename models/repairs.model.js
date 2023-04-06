@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const { dataBase } = require('../database/config');
 
 
-const UserRepairs = dataBase.define('user',{
+const repairs = dataBase.define('user',{
     id:{
         primaryKey: true,
         allowNull: false,
@@ -10,12 +10,13 @@ const UserRepairs = dataBase.define('user',{
         type: DataTypes.INTEGER,
     },
     date:{
-        allowNull:false,
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
+        allowNull:false
+        
     },
     status:{
         allowNull:false,
-        type:DataTypes.ENUM('pending' | ' completed' |  'cancelled'),
+        type:DataTypes.ENUM('pending' , 'completed' ,  'cancelled'),
         defaultValue: 'pending'
     },
     userId:{
@@ -24,4 +25,4 @@ const UserRepairs = dataBase.define('user',{
     }
 })
 
-module.exports = UserRepairs
+module.exports = repairs

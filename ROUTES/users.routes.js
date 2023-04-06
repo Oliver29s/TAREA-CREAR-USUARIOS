@@ -1,7 +1,8 @@
 const express = require("express");
-const router = express.Router();
+
 const usersController = require("../CONTROLLER/users.controller");
 const usersMiddlewares = require('../MIDDLEWARES/users.middlewares')
+const router = express.Router();
 
 router
   .route("/")
@@ -10,8 +11,8 @@ router
 
 router
   .route("/:id")
-  .get(usersController.findOneUsers)
-  .patch(usersMiddlewares.updateUsers,usersController.updateUsers)
-  .delete(usersController.deleteUsers);
+  .get(usersMiddlewares.validExistUser,usersController.findOneUsers)
+  .patch(usersMiddlewares.validUsers,usersMiddlewares.validExistUser,usersController.updateUsers)
+  .delete(usersMiddlewares.validExistUser,usersController.deleteUsers);
 
 module.exports = router;

@@ -1,115 +1,62 @@
 const UserRepairs = require('../models/repairs.model');
 
 exports.readlAllUser = async (req, res) => {
-  try {
-    const user = await UserRepairs.findAll({
-      where: {
-        status: 'pending',
-      },
-    });
-    res.status(200).json({
-      status: 'succes',
-      message: 'The query has been done successfully',
-      user,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status:'error',
-      message:'error'
-    })
-  }
-  
+  const repair = await UserRepairs.findAll({
+    where: {
+      status: 'pending',
+    },
+  });
+  res.status(200).json({
+    status: 'succes',
+    message: 'The query has been done successfully',
+    repair,
+  });
 };
 
 exports.createUser = async (req, res) => {
-  try {
-    const { date, userId } = req.body;
+  const { date, userId } = req.body;
 
-    const user = await UserRepairs.create({ date, userId });
+  const repair = await UserRepairs.create({ date, userId });
 
-    res.status(201).json({
-      
-      status: 'pending',
-      message: 'The product has been created',
-      user
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'fail ',
-    });
-  }
+  res.status(201).json({
+    status: 'pending',
+    message: 'The product has been created',
+    repair,
+  });
 };
 
 exports.updateUsers = async (req, res) => {
-  try {
-    const { user } = req
-    await user.update({
-      id,
-      date,
-      status: status,
-      userId: userId,
-    });
-    if (!user) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'producto no encontrado',
-      });
-    }
-    res.status(200).json({
-      status:'completes',
-      message: 'update exit',
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'fail ',
-    });
-  }
+  const { repair } = req;
+  await repair.update({status: 'completed',});
+
+  res.status(200).json({
+    status: 'completed',
+    message: 'update exit',
+  });
 };
 
 exports.deleteUsers = async (req, res) => {
-  try {
-    const { user } = req
-      await user.delete({status:'cancelled'});
-    if (!user) {
-      return res.status(200).json({
-        status: 'error',
-        message: 'user is not define',
-      });
-    }
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'fail ',
-    });
-  }
+  const { repair } = req;
+  await repair.update({ status: 'cancelled' });
+
+  res.status(200).json({
+    status: 'succes',
+    message: 'The repasir has ben cancelled',
+  });
 };
 
 exports.findOneUsers = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await UserRepairs.findOne({
-      where: {
-        id,
-        status: 'pending',
-      },
-    });
-    if (!user) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'user is not define',
-      });
-    }
+    const { repair } = req;
 
     res.status(200).json({
       status: 'pending',
-      user,
+      repair,
     });
   } catch (err) {
     res.status(500).json({
       status: 'fail',
-      message: 'fail ',
+      message: 'inter server error ',
     });
   }
 };

@@ -11,5 +11,5 @@ app.use(express.json());
 
 
 app.use("/api/v1/users", usersRoutes);
-app.use('/api/v1/repairs',repairsRoutes)
+app.use("/api/v1/repairs",repairsRoutes)
 module.exports = app;

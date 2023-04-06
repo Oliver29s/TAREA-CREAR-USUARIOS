@@ -11,12 +11,17 @@ router
 
 router
   .route('/:id')
-  .get(repairsController.findOneUsers)
+  .get(
+    repairsMiddlewares.validExistRepair,
+    repairsController.findOneUsers
+  )
   .patch(
-    repairsMiddlewares.validExistProduct,
+    repairsMiddlewares.validExistRepair,
     repairsController.updateUsers
   )
-  .delete(repairsController.deleteUsers);
+  .delete(
+    repairsMiddlewares.validExistRepair,
+    repairsController.deleteUsers
+  );
 
-
-  module.exports = router
+module.exports = router;
