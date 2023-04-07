@@ -1,6 +1,6 @@
 const UserRepairs = require('../models/repairs.model');
 
-exports.readlAllUser = async (req, res) => {
+exports.readlAllRepairs = async (req, res) => {
   const repair = await UserRepairs.findAll({
     where: {
       status: 'pending',
@@ -13,7 +13,7 @@ exports.readlAllUser = async (req, res) => {
   });
 };
 
-exports.createUser = async (req, res) => {
+exports.createRepair = async (req, res) => {
   const { date, userId } = req.body;
 
   const repair = await UserRepairs.create({ date, userId });
@@ -25,7 +25,7 @@ exports.createUser = async (req, res) => {
   });
 };
 
-exports.updateUsers = async (req, res) => {
+exports.updateRepair = async (req, res) => {
   const { repair } = req;
   await repair.update({status: 'completed',});
 
@@ -35,7 +35,7 @@ exports.updateUsers = async (req, res) => {
   });
 };
 
-exports.deleteUsers = async (req, res) => {
+exports.deleteRepair = async (req, res) => {
   const { repair } = req;
   await repair.update({ status: 'cancelled' });
 
@@ -45,7 +45,7 @@ exports.deleteUsers = async (req, res) => {
   });
 };
 
-exports.findOneUsers = async (req, res) => {
+exports.findOneRepair = async (req, res) => {
   try {
     const { repair } = req;
 

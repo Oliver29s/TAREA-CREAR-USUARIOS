@@ -6,22 +6,22 @@ const repairsController = require('../CONTROLLER/repairs.controller');
 
 router
   .route('/')
-  .get(repairsController.readlAllUser)
-  .post(repairsMiddlewares.validDate, repairsController.createUser);
+  .get(repairsController.readlAllRepairs)
+  .post(repairsMiddlewares.validDate, repairsController.createRepair);
 
 router
   .route('/:id')
   .get(
     repairsMiddlewares.validExistRepair,
-    repairsController.findOneUsers
+    repairsController.findOneRepair
   )
   .patch(
     repairsMiddlewares.validExistRepair,
-    repairsController.updateUsers
+    repairsController.updateRepair
   )
   .delete(
     repairsMiddlewares.validExistRepair,
-    repairsController.deleteUsers
+    repairsController.deleteRepair
   );
 
 module.exports = router;
