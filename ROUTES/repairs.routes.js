@@ -1,13 +1,17 @@
 const express = require('express');
-const router = express.Router();
+
 
 const repairsMiddlewares = require('../MIDDLEWARES/repairs.middlewares');
 const repairsController = require('../CONTROLLER/repairs.controller');
+const validMiddlewares = require('../MIDDLEWARES/validations.middlewares')
+
+
+const router = express.Router();
 
 router
   .route('/')
   .get(repairsController.readlAllRepairs)
-  .post(repairsMiddlewares.validDate, repairsController.createRepair);
+  .post(validMiddlewares.repairsUser, repairsController.createRepair);
 
 router
   .route('/:id')

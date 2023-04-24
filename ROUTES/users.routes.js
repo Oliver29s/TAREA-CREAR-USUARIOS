@@ -1,18 +1,26 @@
-const express = require("express");
+const express = require('express');
 
-const usersController = require("../CONTROLLER/users.controller");
-const usersMiddlewares = require('../MIDDLEWARES/users.middlewares')
+const usersController = require('../CONTROLLER/users.controller');
+const usersMiddlewares = require('../MIDDLEWARES/users.middlewares');
+const validationMiddlewares = require('../MIDDLEWARES/validations.middlewares');
+const authMiddlewares = require('../MIDDLEWARES/auth.middlewares')
 const router = express.Router();
 
-router
-  .route("/")
-  .get(usersController.readlAllUser)
-  .post(usersMiddlewares.validUsers,usersController.createUser);
+router.use(authMiddlewares.protect)
+
+router.route('/').get(usersController.readlAllUser);
 
 router
-  .route("/:id")
-  .get(usersMiddlewares.validExistUser,usersController.findOneUsers)
-  .patch(usersMiddlewares.validUsers,usersMiddlewares.validExistUser,usersController.updateUsers)
-  .delete(usersMiddlewares.validExistUser,usersController.deleteUsers);
+  .route('/:id')
+  .get(usersMiddlewares.validExistUser,authMiddlewares.protectAccountOwner, usersController.findOneUsers)
+  .patch(
+    validationMiddlewares.userValidation,
+    usersMiddlewares.validExistUser,
+    usersController.updateUsers
+  )
+  .delete(
+    usersMiddlewares.validExistUser,authMiddlewares.protectAccountOwner,
+    usersController.deleteUsers
+  );
 
 module.exports = router;

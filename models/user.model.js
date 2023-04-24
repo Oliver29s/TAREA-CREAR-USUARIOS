@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../database/config');
 
+
 const User = db.define('user', {
   id: {
     primaryKey: true,
@@ -8,6 +9,7 @@ const User = db.define('user', {
     autoIncrement: true,
     type: DataTypes.INTEGER,
   },
+  
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -27,7 +29,7 @@ const User = db.define('user', {
     defaultValue: 'client'
   },
   status: {
-    type:DataTypes.STRING,
+    type:DataTypes.ENUM('available', 'disabled'),
     allowNull:false,
     defaultValue: 'available',
 }
