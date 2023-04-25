@@ -4,14 +4,17 @@ const express = require('express');
 const repairsMiddlewares = require('../MIDDLEWARES/repairs.middlewares');
 const repairsController = require('../CONTROLLER/repairs.controller');
 const validMiddlewares = require('../MIDDLEWARES/validations.middlewares')
+const authMiddlewares = require('../MIDDLEWARES/auth.middlewares')
 
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(repairsController.readlAllRepairs)
+  .get(authMiddlewares.restrictTo('employee'),repairsController.readlAllRepairs)
   .post(validMiddlewares.repairsUser, repairsController.createRepair);
+
+router.use(authMiddlewares.restrictTo('employee'))
 
 router
   .route('/:id')

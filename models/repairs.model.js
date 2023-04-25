@@ -32,9 +32,7 @@ const Repairs = db.define('repair', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  role:{
-    type:DataTypes.ENUM('')
-  }
+
 });
 
 module.exports = Repairs;

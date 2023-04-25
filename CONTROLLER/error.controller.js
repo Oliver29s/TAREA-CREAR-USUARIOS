@@ -7,6 +7,10 @@ const handleCastError22P02 = () => {
   );
 };
 
+const handleJWTexpError = () =>{
+  new AppError('Your token has expired! Please login again',401)
+}
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -41,8 +45,11 @@ exports.globalErrorHandler = (err, req, res, next) => {
   if (process.env.NODE_ENV === 'production') {
     let error = err;
 
-    if (error.parent?.code === '22P02')
-      error = handleCastError22P02();
+    
+
+    if (error.parent?.code === '22P02') error = handleCastError22P02();
+
+    if(error.name === 'TokenExpiredError') error = handleJWTexpError()
 
     sendErrorProd(error, res);
   }

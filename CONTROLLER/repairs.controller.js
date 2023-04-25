@@ -1,7 +1,7 @@
 const UserRepairs = require('../models/repairs.model');
 const catchAsync = require('../utils/catchAsync');
 
-exports.readlAllRepairs = catchAsync( async (req, res) => {
+exports.readlAllRepairs = catchAsync(async (req, res) => {
   const repair = await UserRepairs.findAll({
     where: {
       status: 'pending',
@@ -14,10 +14,16 @@ exports.readlAllRepairs = catchAsync( async (req, res) => {
   });
 });
 
-exports.createRepair = catchAsync( async (req, res) => {
-  const { date, userId,description,motorsNumber } = req.body;
+exports.createRepair = catchAsync(async (req, res) => {
+  const { description,  } = req.body;
+  const { sessionUser } = req;
 
-  const repair = await UserRepairs.create({ date, userId,description,motorsNumber });
+  const repair = await UserRepairs.create({
+    date:new Date(),
+    userId:sessionUser.id,
+    description,
+    motorsNumber:sessionUser.id
+  });
 
   res.status(201).json({
     status: 'pending',
@@ -26,7 +32,7 @@ exports.createRepair = catchAsync( async (req, res) => {
   });
 });
 
-exports.updateRepair = catchAsync( async (req, res) => {
+exports.updateRepair = catchAsync(async (req, res) => {
   const { repair } = req;
   await repair.update({ status: 'completed' });
 
@@ -36,7 +42,7 @@ exports.updateRepair = catchAsync( async (req, res) => {
   });
 });
 
-exports.deleteRepair = catchAsync( async (req, res) => {
+exports.deleteRepair = catchAsync(async (req, res) => {
   const { repair } = req;
   await repair.update({ status: 'cancelled' });
 
@@ -46,7 +52,7 @@ exports.deleteRepair = catchAsync( async (req, res) => {
   });
 });
 
-exports.findOneRepair = catchAsync(  async (req, res) => {
+exports.findOneRepair = catchAsync(async (req, res) => {
   const { repair } = req;
 
   res.status(200).json({

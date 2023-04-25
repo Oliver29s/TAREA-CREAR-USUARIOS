@@ -1,3 +1,4 @@
+const Repairs = require('../models/repairs.model');
 const User = require('../models/user.model');
 const catchAsync = require('../utils/catchAsync');
 
@@ -6,6 +7,12 @@ exports.readlAllUser = catchAsync(async (req, res) => {
     where: {
       status: 'available',
     },
+    attributes: ['id','name','role'],
+    include: [
+      {
+        model: Repairs
+      },
+    ],
   });
   res.status(200).json({
     status: 'success',
