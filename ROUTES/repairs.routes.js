@@ -9,6 +9,8 @@ const authMiddlewares = require('../MIDDLEWARES/auth.middlewares')
 
 const router = express.Router();
 
+router.use(authMiddlewares.protect)
+
 router
   .route('/')
   .get(authMiddlewares.restrictTo('employee'),repairsController.readlAllRepairs)
