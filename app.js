@@ -2,13 +2,13 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors')
 
-const usersRoutes = require('./ROUTES/users.routes');
-const repairsRoutes = require('./ROUTES/repairs.routes');
-const authRouter = require('./ROUTES/auth.routes');
+const usersRoutes = require('./routes/users.routes');
+const repairsRoutes = require('./routes/repairs.routes');
+const authRouter = require('./routes/auth.routes');
 
 
 const AppError = require('./utils/appError');
-const { globalErrorHandler } = require('./CONTROLLER/error.controller');
+const { globalErrorHandler } = require('./controller/error.controller');
 
 const app = express();
 

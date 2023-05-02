@@ -1,10 +1,10 @@
 const express = require('express');
 
 
-const repairsMiddlewares = require('../MIDDLEWARES/repairs.middlewares');
-const repairsController = require('../CONTROLLER/repairs.controller');
-const validMiddlewares = require('../MIDDLEWARES/validations.middlewares')
-const authMiddlewares = require('../MIDDLEWARES/auth.middlewares')
+const repairsMiddlewares = require('../middlewares/repairs.middlewares');
+const repairsController = require('../controller/repairs.controller');
+const validMiddlewares = require('../middlewares/validations.middlewares')
+const authMiddlewares = require('../middlewares/auth.middlewares')
 
 
 const router = express.Router();

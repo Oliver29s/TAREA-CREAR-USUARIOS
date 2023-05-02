@@ -1,4 +1,5 @@
 const UserRepairs = require('../models/repairs.model');
+const User = require('../models/user.model');
 const catchAsync = require('../utils/catchAsync');
 
 exports.readlAllRepairs = catchAsync(async (req, res) => {
@@ -6,7 +7,14 @@ exports.readlAllRepairs = catchAsync(async (req, res) => {
     where: {
       status: 'pending',
     },
+    attributes: ['motorsNumber', 'date', 'status','description'],
+    include: [
+      {
+        model: User,
+      },
+    ],
   });
+
   res.status(200).json({
     status: 'succes',
     message: 'The query has been done successfully',
@@ -15,14 +23,14 @@ exports.readlAllRepairs = catchAsync(async (req, res) => {
 });
 
 exports.createRepair = catchAsync(async (req, res) => {
-  const { description,  } = req.body;
+  const { description } = req.body;
   const { sessionUser } = req;
 
   const repair = await UserRepairs.create({
-    date:new Date(),
-    userId:sessionUser.id,
+    date: new Date(),
+    userId: sessionUser.id,
     description,
-    motorsNumber:sessionUser.id
+    motorsNumber: sessionUser.id,
   });
 
   res.status(201).json({

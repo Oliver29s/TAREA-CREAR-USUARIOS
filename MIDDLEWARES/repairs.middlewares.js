@@ -1,4 +1,5 @@
 const UserRepairs = require('../models/repairs.model');
+const User = require('../models/user.model');
 
 exports.validExistRepair = async (req, res, next) => {
   const { id } = req.params;
@@ -7,6 +8,12 @@ exports.validExistRepair = async (req, res, next) => {
       id,
       status: 'pending',
     },
+    attributes: ['motorsNumber', 'date', 'status','description'],
+    include: [
+      {
+        model: User,
+      },
+    ],
   });
 
   if (!repair) {
