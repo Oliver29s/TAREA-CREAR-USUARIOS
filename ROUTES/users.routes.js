@@ -16,6 +16,7 @@ router
   .patch(
     validationMiddlewares.userValidation,
     usersMiddlewares.validExistUser,
+    authMiddlewares.protectAccountOwner,
     usersController.updateUsers
   )
   .delete(
