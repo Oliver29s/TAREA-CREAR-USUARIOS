@@ -16,7 +16,7 @@ exports.readlAllUser = catchAsync(async (req, res) => {
   });
   res.status(200).json({
     status: 'success',
-    message: 'The query has bee n done successfully',
+    message: 'The query has bee done successfully',
     user,
   });
 });

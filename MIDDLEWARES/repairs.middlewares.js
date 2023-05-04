@@ -23,6 +23,7 @@ exports.validExistRepair = async (req, res, next) => {
     });
   }
   req.repair = repair;
+  req.user = repair.user
   next();
 };
 
